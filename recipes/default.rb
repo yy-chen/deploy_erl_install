@@ -110,13 +110,13 @@ end
 directory "#{area_path}/log" do
     action :delete
     recursive true
-    only_if(File.exists?("/tmp/log"))
+    only_if{File.exists?("/tmp/log")}
 end
 
 if File.exists?("/tmp/log")
     ruby_block "cp log" do
         block do
-            FileUtils.cp_r("/tmp/log", "#{area_path}/log")
+            FileUtils.mv("/tmp/log", "#{area_path}/log")
         end
     end
 end
