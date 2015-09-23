@@ -71,7 +71,7 @@ if File.exists?("#{area_path}") and APP_CONFIG == "" and VMARGS == ""
 end
 
 #如果原应用路径存在， 备份日志
-if File.exists?("#area_path")
+if File.exists?("#{area_path}")
     if File.exists?("/tmp/log")
         ruby_block "rename tmp log" do
             block do
@@ -116,16 +116,16 @@ end
 if File.exists?("/tmp/log")
     ruby_block "cp log" do
         block do
-            FileUtils.mv("/tmp/log", "#{area_path}/log")
+            FileUtils.cp_r("/tmp/log", "#{area_path}/log")
         end
     end
 end
 
-directory "/tmp/log" do
-    action :delete
-    recursive true
-    only_if{File.exists?("/tmp/log")}
-end
+#directory "/tmp/log" do
+#    action :delete
+#    recursive true
+#    only_if{File.exists?("/tmp/log")}
+#end
 
 #删除默认配置文件
 file "#{area_path}/etc/#{APP_NAME}.config" do
