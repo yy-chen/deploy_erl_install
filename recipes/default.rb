@@ -81,7 +81,7 @@ if File.exists?("#{area_path}")
     end
     ruby_block "save log" do
         block do
-            FileUtils.cp_r("#{area_path}/log", "/tmp/log")
+            FileUtils.cp_r("#{area_path}/log", "/home/dhcd/back/#{AREA_NAME}_log.#{Time.now.to_i}")
         end
     end
 end
