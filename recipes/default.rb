@@ -24,9 +24,7 @@ area_path = "#{WORK_DIR}/#{AREA_NAME}"
 cron "create crontab" do
     minute '*/1'
     user 'dhcd'
-    command <<-EOH
-    /home/dhcd/release/monitor/monitor.sh
-    EOH
+    command '/home/dhcd/release/monitor/monitor.sh'
     action :nothing
 end
 
@@ -34,11 +32,8 @@ end
 cron "change crontab" do
     minute '*/1'
     user 'dhcd'
-    command <<-EOH
-    /home/dhcd/release/monitor/monitor.sh
-    EOH
+    command '/home/dhcd/release/monitor/monitor.sh'
     action :delete
-    only_if{File.exists?("#{area_path}")}
     notifies :run, 'execute[stop app]', :immediate
     notifies :create, 'cron[create crontab]', :delayed
 end
